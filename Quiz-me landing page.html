@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Quiz-me | Smart Assessments</title>
+
+ <style>
+
+*{
+box-sizing:border-box;
+margin:0;
+padding:0;
+font-family:Segoe UI, Arial, Helvetica, sans-serif;
+}
+
+body{
+background:linear-gradient(180deg,#f1f5ff,#e6ecff);
+color:#1e293b;
+overflow-x:hidden;
+}
+
+/* NAVIGATION */
+
+.nav{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:20px 60px;
+flex-wrap:wrap;
+gap:15px;
+
+position:sticky;
+top:0;
+z-index:1000;
+
+/* REAL glass blue */
+background:rgba(30,64,175,0.28);
+
+/* blur */
+backdrop-filter:blur(18px);
+-webkit-backdrop-filter:blur(18px);
+
+/* glass border */
+border-bottom:1px solid rgba(255,255,255,0.18);
+
+/* glass glow */
+box-shadow:
+0 8px 30px rgba(0,0,0,.18),
+0 0 25px rgba(59,130,246,.18),
+inset 0 1px 1px rgba(255,255,255,.15);
+
+color:white;
+
+overflow:hidden;
+}
+
+/* top shine */
+.nav::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:50%;
+
+background:linear-gradient(
+to bottom,
+rgba(255,255,255,.22),
+transparent
+);
+
+pointer-events:none;
+}
+
+/* subtle animated glow */
+.nav::after{
+content:"";
+position:absolute;
+top:-120%;
+left:-30%;
+width:220px;
+height:300%;
+
+background:rgba(255,255,255,.08);
+
+transform:rotate(25deg);
+
+filter:blur(25px);
+
+animation:glassMove 8s linear infinite;
+}
+
+@keyframes glassMove{
+0%{
+left:-40%;
+}
+
+100%{
+left:120%;
+}
+}
+
+.nav h1{
+font-size:26px;
+letter-spacing:.5px;
+}
+
+.nav-links{
+display:flex;
+flex-wrap:wrap;
+gap:15px;
+}
+
+.nav a{
+color:white;
+text-decoration:none;
+font-weight:500;
+opacity:.9;
+transition:.3s;
+}
+
+.nav a:hover{
+opacity:1;
+}
+
+/* BUTTONS */
+
+.btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(145deg,#3b82f6,#1d4ed8);
+padding:14px 28px;
+border-radius:14px;
+color:white;
+text-decoration:none;
+font-weight:700;
+font-size:16px;
+min-width:170px;
+
+/* bigger responsive buttons */
+width:clamp(160px, 22vw, 240px);
+
+position:relative;
+overflow:hidden;
+
+box-shadow:
+0 12px 25px rgba(37,99,235,.35),
+0 4px 10px rgba(0,0,0,.15),
+inset 0 2px 4px rgba(255,255,255,.3);
+
+transition:
+transform .25s,
+box-shadow .25s;
+}
+
+/* glossy lighting */
+
+.btn::before{
+content:"";
+position:absolute;
+top:0;
+left:-40%;
+width:60%;
+height:100%;
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.35),
+transparent
+);
+transform:skewX(-25deg);
+transition:.5s;
+}
+
+.btn:hover::before{
+left:120%;
+}
+
+.btn:hover{
+transform:
+translateY(-4px)
+scale(1.04);
+
+box-shadow:
+0 18px 35px rgba(37,99,235,.45),
+0 8px 18px rgba(0,0,0,.2),
+inset 0 2px 4px rgba(255,255,255,.35);
+}
+
+.btn:active{
+transform:scale(.98);
+}
+
+.btn.outline{
+background:white;
+border:2px solid #2563eb;
+color:#2563eb;
+box-shadow:
+0 10px 20px rgba(0,0,0,.12);
+}
+
+.btn.outline:hover{
+background:#2563eb;
+color:white;
+}
+
+/* HERO */
+
+.hero{
+text-align:center;
+padding:120px 20px;
+background:
+radial-gradient(circle at top,#3b82f6,#1e40af);
+color:white;
+position:relative;
+overflow:hidden;
+}
+
+/* floating hero panel */
+
+.hero::after{
+content:"";
+position:absolute;
+bottom:-60px;
+left:50%;
+transform:translateX(-50%);
+width:600px;
+height:120px;
+background:rgba(0,0,0,.15);
+filter:blur(40px);
+z-index:0;
+}
+
+/* 3D KEY BEHIND WHITE AREA */
+
+.hero::before{
+content:"🔑";
+position:absolute;
+top:50%;
+left:50%;
+transform:translate(-50%,-50%) rotate(-18deg);
+
+font-size:260px;
+opacity:.08;
+
+filter:
+drop-shadow(0 20px 20px rgba(0,0,0,.35));
+
+z-index:0;
+pointer-events:none;
+}
+
+.hero h2,
+.hero p,
+.cta{
+position:relative;
+z-index:2;
+}
+
+.hero h2{
+font-size:48px;
+margin-bottom:18px;
+font-weight:700;
+text-shadow:0 5px 10px rgba(0,0,0,.3);
+}
+
+.hero p{
+font-size:19px;
+margin-bottom:35px;
+opacity:.95;
+}
+
+.cta{
+display:flex;
+justify-content:center;
+flex-wrap:wrap;
+gap:18px;
+}
+
+/* FEATURES */
+
+.features{
+display:flex;
+justify-content:center;
+gap:35px;
+padding:120px 40px 80px;
+flex-wrap:wrap;
+}
+
+/* 3D CARD */
+
+.card{
+background:white;
+width:270px;
+padding:30px;
+border-radius:16px;
+text-align:center;
+position:relative;
+
+box-shadow:
+0 20px 40px rgba(0,0,0,.15),
+0 2px 4px rgba(0,0,0,.1);
+
+transition:.35s;
+}
+
+/* card lighting */
+
+.card::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:60%;
+border-radius:16px;
+background:linear-gradient(
+to bottom,
+rgba(255,255,255,.8),
+rgba(255,255,255,0)
+);
+pointer-events:none;
+}
+
+.card:hover{
+transform:
+translateY(-10px)
+scale(1.03);
+
+box-shadow:
+0 30px 60px rgba(0,0,0,.2),
+0 8px 15px rgba(0,0,0,.15);
+}
+
+.card h3{
+margin-bottom:12px;
+font-size:20px;
+color:#1e40af;
+}
+
+.card p{
+color:#475569;
+font-size:15px;
+}
+
+/* QUIZ ICON STYLE */
+
+.card h3::before{
+content:"🎓 ";
+}
+
+/* FOOTER */
+
+footer{
+background:#0f172a;
+color:#cbd5f5;
+text-align:center;
+padding:25px;
+margin-top:80px;
+font-size:14px;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:768px){
+
+.hero{
+padding:90px 20px;
+}
+
+.hero h2{
+font-size:34px;
+}
+
+.hero::before{
+font-size:170px;
+}
+
+.features{
+padding:80px 20px;
+}
+
+.nav{
+padding:18px 25px;
+justify-content:center;
+text-align:center;
+}
+
+.btn{
+width:100%;
+max-width:320px;
+}
+
+.cta{
+flex-direction:column;
+align-items:center;
+}
+
+}
+
+</style>
+</head>
+
+<body>
+
+<header class="nav">
+  <h1>Quiz-me</h1>
+  <nav>
+    <a href="Introduction.html" class="btn">Get Started/Tour</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h2>Assess Smarter. Learn Better.</h2>
+  <p>Create, assign, and take assessments with real insight.</p>
+  <div class="cta">
+    <a href="Register-login.php" class="btn">Student Sign Up</a>
+    <a href="Register-login.php" class="btn outline">Facilitator Login</a>
+  </div>
+</section>
+
+<section class="features">
+
+  <!-- 3D Blue Key -->
+  <div class="bg-key">
+    🔑
+  </div>
+
+  <div class="card">
+    <h3>85% Pass Logic</h3>
+    <p>Smart grading that adapts feedback based on performance.</p>
+  </div>
+
+  <div class="card">
+    <h3>Student Tracking</h3>
+    <p>Every assessment, every score — all in one profile.</p>
+  </div>
+
+  <div class="card">
+    <h3>Email Verified</h3>
+    <p>Secure signups and result notifications.</p>
+  </div>
+
+</section>
+
+<footer>
+  <p>&copy; 2026 Quiz-me. All rights reserved.</p>
+</footer>
+
+<style>
+
+.features{
+  position:relative;
+  display:flex;
+  gap:25px;
+  justify-content:center;
+  flex-wrap:wrap;
+  padding:80px 20px;
+  overflow:hidden;
+  background:linear-gradient(180deg,#eef4ff,#dbeafe);
+}
+
+/* 3D Key Background */
+.bg-key{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%, -50%) rotate(-20deg);
+  font-size:320px;
+
+  /* Make it visible */
+  opacity:0.22;
+
+  z-index:0;
+
+  /* Metallic Blue */
+  background:
+    linear-gradient(
+      145deg,
+      #ffffff 0%,
+      #8ec5ff 15%,
+      #1d4ed8 35%,
+      #60a5fa 55%,
+      #2563eb 75%,
+      #ffffff 100%
+    );
+
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+
+  /* Strong 3D Glow */
+  filter:
+    drop-shadow(0 0 10px rgba(96,165,250,0.9))
+    drop-shadow(0 0 25px rgba(37,99,235,0.9))
+    drop-shadow(0 15px 20px rgba(0,0,0,0.25));
+
+  text-shadow:
+    0 2px 0 #1e40af,
+    0 4px 0 #1d4ed8,
+    0 6px 12px rgba(0,0,0,0.4);
+
+  animation:floatKey 5s ease-in-out infinite;
+}
+
+/* Floating Animation */
+@keyframes floatKey{
+  0%{
+    transform:translate(-50%, -50%) rotate(-20deg) translateY(0);
+  }
+
+  50%{
+    transform:translate(-50%, -50%) rotate(-16deg) translateY(-15px);
+  }
+
+  100%{
+    transform:translate(-50%, -50%) rotate(-20deg) translateY(0);
+  }
+}
+
+.card{
+  position:relative;
+  z-index:2;
+  background:rgba(255,255,255,0.92);
+  padding:25px;
+  border-radius:22px;
+  width:300px;
+
+  border:1px solid rgba(255,255,255,0.7);
+
+  box-shadow:
+    0 10px 30px rgba(0,0,0,0.08),
+    0 0 20px rgba(59,130,246,0.08);
+
+  backdrop-filter:blur(10px);
+
+  transition:0.3s ease;
+}
+
+.card:hover{
+  transform:translateY(-6px);
+  box-shadow:
+    0 18px 35px rgba(37,99,235,0.18),
+    0 0 30px rgba(96,165,250,0.18);
+}
+
+.card h3{
+  margin-bottom:10px;
+  color:#0f172a;
+}
+
+.card p{
+  color:#475569;
+  line-height:1.6;
+}
+
+footer{
+  text-align:center;
+  padding:25px;
+  color:#64748b;
+}
+
+/* Mobile */
+@media(max-width:768px){
+
+  .bg-key{
+    font-size:220px;
+    opacity:0.16;
+  }
+
+  .card{
+    width:100%;
+    max-width:340px;
+  }
+
+}
+</style>
+
+</body>
+</html>
